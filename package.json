@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
+    "jsonwebtoken": "^9.0.0",
     "md5": "^2.3.0",
     "mongoose": "^7.0.3",
     "next": "13.2.4",
