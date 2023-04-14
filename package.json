@@ -13,15 +13,20 @@
     "@types/node": "18.15.11",
     "@types/react": "18.0.31",
     "@types/react-dom": "18.0.11",
+    "cosmicjs": "^4.3.7",
     "jsonwebtoken": "^9.0.0",
     "md5": "^2.3.0",
+    "moment": "^2.29.4",
     "mongoose": "^7.0.3",
+    "multer": "^1.4.5-lts.1",
     "next": "13.2.4",
+    "next-connect": "^0.13.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "5.0.3"
   },
   "devDependencies": {
-    "@types/md5": "^2.3.2"
+    "@types/md5": "^2.3.2",
+    "@types/multer": "^1.4.7"
   }
 }
