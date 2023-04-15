@@ -31,23 +31,22 @@ import { PublicacaoModel } from "@/models/publicacaoModel"
             if(!req.file || !req.file.originalname) {
                 return res.status(400).json({erro: "A imagem é obrigatória"})
             }
-            console.log("1000000")
-            const image = await uploadImagemCosmic(req)
-            console.log("1")
+            const image = await uploadImagemCosmic(req);
+         
             const publicacao = {
                 idUsuario : usuario._id,
                 descricao,
                 foto : image.media.url,
                 data: new Date()
             }
-            console.log("2")
-            await PublicacaoModel.create(publicacao)
-            console.log("3")
-            return res.status(200).json({msg:"publicação criada com sucesso"})
+       
+            await PublicacaoModel.create(publicacao);
+          
+            return res.status(200).json({msg:"publicação criada com sucesso"});
         
         }
         catch(e){
-            console.log(e)
+            console.log(e);
             res.status(200).json({erro: "erro ao cadastrar publicação"})
     }
     })

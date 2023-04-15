@@ -3,9 +3,9 @@ import cosmicjs from "cosmicjs"
 
 
 const {CHAVE_GRAVACAO_AVATARES,
-    CHAVE_GRAVACAO_PUBLICAÇOES,
+    CHAVE_GRAVACAO_PUBLICACOES,
     BUCKET_AVATARES,
-    BUCKET_PUBLICAÇOES} = process.env
+    BUCKET_PUBLICACOES} = process.env
 
     const cosmic = cosmicjs()
     const bucketAvatares = cosmic.bucket({
@@ -14,8 +14,8 @@ const {CHAVE_GRAVACAO_AVATARES,
     })
 
     const bucketPublicações = cosmic.bucket({
-        slug: BUCKET_PUBLICAÇOES,
-        write_key: CHAVE_GRAVACAO_PUBLICAÇOES
+        slug: BUCKET_PUBLICACOES,
+        write_key: CHAVE_GRAVACAO_PUBLICACOES
     })
     const storage = multer.memoryStorage()
     const upload = multer({storage : storage})

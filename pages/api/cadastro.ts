@@ -40,7 +40,7 @@ const handler = nc()
                     avatar: image?.media?.url
                 }
                 await usuarioModel.create(usuarioASerSalvo)
-                return res.status(200).json({erro: "Usuario criado com sucesso"})
+                return res.status(200).json({msg: "Usuario criado com sucesso"})
     
     }
     )
