@@ -1,40 +1,49 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { conectarMongoDB } from "@/middlewares/conectaBancoDeDados";
-import { validarTokenJWT } from "@/middlewares/validarTokenJWT";
-import { RespostaPadramsg } from "@/types/respostaPadraoMsg";
+import type { NextApiRequest, NextApiResponse } from "next";
+import { conectarMongoDB } from "../../middlewares/conectaBancoDeDados";
+import { validarTokenJWT } from "../../middlewares/validarTokenJWT";
 import { PublicacaoModel } from "../../models/publicacaoModel";
 import { usuarioModel } from "../../models/usuarioModel";
+import type {RespostaPadramsg} from '../../types/respostaPadraoMsg';
 
-const likeEndpoint = async(req: NextApiRequest, res: NextApiResponse<RespostaPadramsg>) => {
+const likeEndpoint 
+    = async (req : NextApiRequest, res : NextApiResponse<RespostaPadramsg>) => {
+
     try {
-        if(req.method === "PUT") {
-            const {id} = req?.query
-            const publicacao = await PublicacaoModel.findById(id)
+        if(req.method === 'PUT'){
+            // id da Publicacao - checked
+            const {id} = req?.query;
+            const publicacao = await PublicacaoModel.findById(id);
             if(!publicacao){
-                return res.status(400).json({erro: "publicação não encontrado"})
+                return res.status(400).json({erro : 'Publicacao nao encontrada'});
             }
+
+            // id do usuario que ta curtindo a pub            
             const {userId} = req?.query;
-            const usuario = await usuarioModel.findById(userId)
+            const usuario = await usuarioModel.findById(userId);
             if(!usuario){
-                return res.status(400).json({erro: "usuario não encontrado"})
+                return res.status(400).json({erro : 'Usuario nao encontrada'});
             }
-            console.log("2")
-            const indexUsuarioLike = publicacao.like.findIndex((e: any) => e.toString() === usuario.id.toString())
-            console.log("3")
-            if(indexUsuarioLike != -1) {
-                publicacao.like.splice(indexUsuarioLike, 1)
-                await PublicacaoModel.findByIdAndUpdate({_id: publicacao._id}, publicacao)
-                return res.status(200).json({msg: "publicacao descurtida com sucesso"})
-            } else {
-                publicacao.like.push(usuario._id)
-                await PublicacaoModel.findByIdAndUpdate({_id: publicacao._id}, publicacao)
-                return res.status(200).json({msg : "publicação curtida com sucesso"})
+            
+            const indexDoUsuarioNoLike = publicacao.likes.findIndex((e : any) => e.toString() === usuario._id.toString());
+
+            // se o index for > -1 sinal q ele ja curte a foto
+            if(indexDoUsuarioNoLike != -1){
+                publicacao.likes.splice(indexDoUsuarioNoLike, 1);
+                await PublicacaoModel.findByIdAndUpdate({_id : publicacao._id}, publicacao);
+                return res.status(200).json({msg : 'Publicacao descurtida com sucesso'});
+            }else {
+                // se o index for -1 sinal q ele nao curte a foto
+                publicacao.likes.push(usuario._id);
+                await PublicacaoModel.findByIdAndUpdate({_id : publicacao._id}, publicacao);
+                return res.status(200).json({msg : 'Publicacao curtida com sucesso'});
             }
         }
-        return res.status(400).json({erro: "erro no metodo"})
-    } catch (e) {
-       console.log(e) 
-       return res.status(500).json({erro: "não foi possivel dar like/deslike"})
+
+        return res.status(405).json({erro : 'Metodo informado nao e valido'});
+    }catch(e){
+        console.log(e);
+        return res.status(500).json({erro : 'Ocorreu erro ao curtir/descurtir uma publicacao'});
     }
 }
-export default validarTokenJWT(conectarMongoDB(likeEndpoint))
+
+export default (validarTokenJWT(conectarMongoDB(likeEndpoint)));
