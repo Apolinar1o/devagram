@@ -7,6 +7,7 @@ const usuarioSchema = new Schema ({
     avatar: {type : String, required : false},
     seguidores: {type : Number, default : 0},
     seguindo: {type : Number, default: 0},
+    publicacoes: {type: Number, default : 0}
 })
 
 export const usuarioModel = (mongoose.models.usuarios || mongoose.model("usuario", usuarioSchema))
