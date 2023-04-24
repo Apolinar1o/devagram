@@ -6,6 +6,7 @@ import {conectarMongoDB } from "../../middlewares/conectaBancoDeDados"
 import {validarTokenJWT} from "../../middlewares/validarTokenJWT"
 import { usuarioModel} from "@/models/usuarioModel"
 import { PublicacaoModel } from "@/models/publicacaoModel"
+import usuario from "./usuario"
 
     const handler = nc()
     .use(upload.single("file"))
@@ -39,19 +40,22 @@ import { PublicacaoModel } from "@/models/publicacaoModel"
                 foto : image.media.url,
                 data: new Date()
             }
-       
+            usuario.publicacoes++;
+            await usuarioModel.findByIdAndUpdate({_id : usuario._id}, usuario);
+
+        
             await PublicacaoModel.create(publicacao);
           
             return res.status(200).json({msg:"publicação criada com sucesso"});
-        
+
+           
         }
         catch(e){
             console.log(e);
             res.status(200).json({erro: "erro ao cadastrar publicação"})
     }
     })
-
-
+    
 
 export const config = {
     api : {
