@@ -6,6 +6,7 @@
     import { usuarioModel } from "@/models/usuarioModel"
     export {usuarioModel} from "../../models/usuarioModel"
     import jwt from "jsonwebtoken"
+import { politicaCORS } from "@/middlewares/potilcaCORS"
     
     const endpointLogin =  async(   
         req: NextApiRequest,
@@ -42,4 +43,4 @@
       
     }
 
-    export default conectarMongoDB(endpointLogin)
+    export default politicaCORS(conectarMongoDB(endpointLogin))

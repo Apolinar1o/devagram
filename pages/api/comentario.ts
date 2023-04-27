@@ -4,6 +4,7 @@ import { RespostaPadramsg } from "@/types/respostaPadraoMsg";
 import { NextApiRequest, NextApiResponse } from "next";
 import { usuarioModel } from "./login";
 import { PublicacaoModel } from "@/models/publicacaoModel";
+import { politicaCORS } from "@/middlewares/potilcaCORS";
 
 const comentarioEndpoint = async(req: NextApiRequest, res: NextApiResponse<RespostaPadramsg>) => {
  
@@ -41,4 +42,4 @@ const comentarioEndpoint = async(req: NextApiRequest, res: NextApiResponse<Respo
         return res.status(500).json({erro: "impossivel de comentar"})
     }
 }
-export default validarTokenJWT(conectarMongoDB(comentarioEndpoint )) 
+export default  politicaCORS((validarTokenJWT(conectarMongoDB(comentarioEndpoint ))))
