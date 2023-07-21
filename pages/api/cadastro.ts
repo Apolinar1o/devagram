@@ -10,11 +10,12 @@ import { politicaCORS } from "@/middlewares/potilcaCORS"
 
 const handler = nc()
     .use(upload.single('file'))
-    .post(  async(req :NextApiRequest, res: NextApiResponse<RespostaPadramsg>) => {
+    .post(  async(req: NextApiRequest, res: NextApiResponse<RespostaPadramsg>) => {
 
         
-            const usuario = req.body as usuarioReq
-    
+            const usuario = req?.body as usuarioReq
+            console.log("222222222222222")
+            console.log("111111111111111111111111111111111112 "+ usuario?.nome)
             if(!usuario.nome || usuario.nome.length < 2) {
                 return res.status(400).json({erro: "nome inválido"})
             }
@@ -24,6 +25,7 @@ const handler = nc()
             if(!usuario.senha || usuario.senha.length < 4) {
                 return res.status(400).json({erro: "senha inválida"})
             }
+            console.log("11111111111111111111111111111111")
                 //validação se ja existe com o mesmo email
                 const usuariosComMesmoEmail = await usuarioModel.find({email: usuario.email})
                 if(usuariosComMesmoEmail && usuariosComMesmoEmail.length > 0) {
