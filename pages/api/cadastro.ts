@@ -12,10 +12,8 @@ const handler = nc()
     .use(upload.single('file'))
     .post(  async(req: NextApiRequest, res: NextApiResponse<RespostaPadramsg>) => {
 
-        
+            console.log("cadastro-started")
             const usuario = req?.body as usuarioReq
-            console.log("222222222222222")
-            console.log("111111111111111111111111111111111112 "+ usuario?.nome)
             if(!usuario.nome || usuario.nome.length < 2) {
                 return res.status(400).json({erro: "nome inválido"})
             }
@@ -28,13 +26,15 @@ const handler = nc()
             console.log("11111111111111111111111111111111")
                 //validação se ja existe com o mesmo email
                 const usuariosComMesmoEmail = await usuarioModel.find({email: usuario.email})
+                console.log("222222222222222222-")
                 if(usuariosComMesmoEmail && usuariosComMesmoEmail.length > 0) {
                     return res.status(400).json({erro:"já existe uma conta com o email informado"})
                 }
-                // enviar a imagem do multer para o cosmic
+                // enviar a imagem do multer para o cosmic[]
+                console.log("222222222222222222")
                 const image = await uploadImagemCosmic(req)
 
-
+                console.log("333333333333333333")
                 //salvar no banco de dados
                 const usuarioASerSalvo = {
                     nome: usuario.nome,
