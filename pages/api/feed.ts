@@ -10,7 +10,7 @@ import { politicaCORS } from "@/middlewares/potilcaCORS"
 const feedEndpoint = async (req: NextApiRequest, res: NextApiResponse<RespostaPadramsg | any> ) =>{
     try{
         if(req.method ==="GET") {
-            
+                console.log("1111111")
             if(req?.query?.id){
 
                 const usuario  = await usuarioModel.findById(req?.query?.id)
